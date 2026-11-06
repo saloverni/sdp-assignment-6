@@ -32,5 +32,11 @@ public final class Main {
         project.accept(compliance);
         System.out.println("\nCOMPLIANCE: " + (compliance.compliant() ? "PASS" : "FAIL"));
         compliance.violations().forEach(System.out::println);
+
+        TechnicalDebtVisitor debt = new TechnicalDebtVisitor();
+        project.accept(debt);
+        System.out.println("\nTECHNICAL DEBT\nEstimated remediation: " + debt.totalMinutes() + " minutes");
+        debt.debts().forEach(item -> System.out.println(
+                item.file() + " | " + item.reason() + " | " + item.minutes() + " minutes"));
     }
 }
